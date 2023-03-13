@@ -1,0 +1,16 @@
+version: '3.0'
+
+services:
+    ardupilot-copter:
+        image: ardupilot-copter:4.3.4
+        build:            
+            context: .
+        ports:
+            - "80:80"
+        expose:
+            - "80"
+        environment:
+            UPDATE_URL: "https://www.doitnow-man.com"
+        stdin_open: true
+        tty: true
+        entrypoint: /bin/bash
