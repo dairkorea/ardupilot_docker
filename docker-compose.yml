@@ -9,8 +9,6 @@ services:
             - "80:80"
         expose:
             - "80"
-        environment:
-            UPDATE_URL: "https://www.doitnow-man.com"
         stdin_open: true
         tty: true
         entrypoint: /bin/bash
