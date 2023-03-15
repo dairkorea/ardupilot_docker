@@ -81,6 +81,9 @@ RUN sim_vehicle.py -j4 -w
 RUN sudo apt-get clean \
     && sudo rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
+EXPOSE 14550
+EXPOSE 5760
+
 ENV CCACHE_MAXSIZE=1G
 ENTRYPOINT ["/ardupilot_entrypoint.sh"]
 CMD ["bash"]

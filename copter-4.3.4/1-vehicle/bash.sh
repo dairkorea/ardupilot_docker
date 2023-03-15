@@ -1,0 +1,1 @@
+docker exec -it 1-vehicle-ardupilot-copter-1 bash

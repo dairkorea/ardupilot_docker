@@ -1,0 +1,121 @@
+# 사용방법
+
+docker-compose.yml
+
+```yml
+
+  command: [ 실행 옵션 ]
+    sim_vehicle.py
+    --vehicle ArduCopter
+    --out=udp:192.168.201.10:14550
+    --out=udp:192.168.102.1:14550
+    --wipe-eeprom
+    --sysid=1
+    --instance=0
+    --no-rebuild     don't rebuild before starting ardupilot
+    --custom-location=CUSTOM_LOCATION
+    --out=OUT           create an additional mavlink output
+    --wipe-eeprom 
+```
+
+volume bind a file or directory
+
+```
+    version: "3.7"    
+    services:
+    app:
+      image: app:latest
+      volumes:
+        - type: bind
+          source: ./sourceFile.yaml
+          target: /location/targetFile.yaml
+```
+
+## 레지스트리 로그인
+
+`~/.gnupg`에 gpg 비밀키와 공개키 생성:
+
+```sh
+$ gpg --gen-key
+Your real name:
+Your email:
+Change...?:
+비밀번호 입력
+```
+
+키 목록:
+
+```sh
+$ gpg --list-keys
+/home/myname/.gnupg/pubring.kbx
+-------------------------------
+pub   rsa3072 2023-03-15 [SC] [expires: 2025-03-14]
+      ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMN
+uid           [ultimate] myname <myemail@myserver.com>
+sub   rsa3072 2023-03-15 [E] [expires: 2025-03-14]
+```
+
+여기서 ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMN 이 gpg-id 이다.
+
+gpg-id 의 공개 키를 이용해 모든 비밀번호를 압호화:
+
+```sh
+$ pass init <gpg-id>
+mkdir: created directory '/home/myname/.password-store/'
+Password store initialized for BEBFF6A7AFF52E805274E6B747EF9777D86DB843
+                               ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMN
+```
+
+비밀번호 저장:
+
+```
+$ pass insert email/myemail@myserver.com
+Enter password for email/tedfromskyy@gmail.com: 
+Retype password for email/tedfromskyy@gmail.com: 
+```
+
+비밀번호 리스트 확인:
+
+```sh
+$ pass
+Password Store
+ └── email
+      └── myemail@myserver.com
+```
+
+비밀번호 불러오기:
+
+```sh
+$ pass email/myemail@myserver.com
+```
+
+비밀번호 출력 없이 클립보드로 불러오기: (45초 후에 삭제 됨)
+
+```sh
+$ pass -c email/myemail@myserver.com
+```
+
+강력한 비밀번호 생성:
+
+```sh
+$ pass generate cloud/ktcloud 16
+1234567890123456 <---- 생성된 비밀번호(16자)
+```
+
+git 연동:
+
+```sh
+pass git init
+```
+
+```sh
+docker login registry.dairkorea.com
+```
+
+
+Username:
+Password:
+
+# 참조
+
+- https://go-kalee.tistory.com/m/4
