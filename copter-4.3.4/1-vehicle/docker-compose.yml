@@ -2,22 +2,20 @@ version: '3.0'
 
 services:
   ardupilot-copter-1of1:
-    image: registry.dairkorea.com/github/ardupilot/sitl/copter:4.3.4
+    image: registry.dairkorea.com/github/ardupilot/sitl/copter:${TAG}
     container_name: ardupilot-copter-1of1
-    build:            
-      context: ..
-      dockerfile: Dockerfile
+    restart: unless-stopped
     ports:
-      - "5760:5760"
+      - ${LISTEN_TCP_PORT}:5760/tcp
     stdin_open: true
     tty: true    
     entrypoint: [ "/ardupilot_entrypoint.sh" ]
-    command: [ "sim_vehicle.py",
-        "--vehicle=ArduCopter",
-        "--out=udp:192.168.201.10:14550",
-        "--out=udp:192.168.0.9:14550",
-        "--wipe-eeprom",
-        "--sysid=1",
-        "--instance=0",
-        "--custom-location=35.280125,126.330111,3,0"
-        ]
+    command:      
+      - sim_vehicle.py
+      - --vehicle=ArduCopter
+      #- --out=udp:192.168.201.10:14550
+      #- --out=udp:192.168.0.9:14550
+      - --wipe-eeprom
+      - --sysid=1
+      - --instance=0
+      - --custom-location=35.280125,126.330111,3,0
